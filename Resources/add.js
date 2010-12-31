@@ -2,7 +2,7 @@ var win = Titanium.UI.currentWindow;
 
 var android = Ti.Platform.name == 'android';
 
-var label_height = android ? 20 : 20
+var label_height = android ? 20 : 20;
 var text_field_height = android ? 45 : 35;
 var button_height = android ? 45 : 35;
 var top = android ? 10 : 10;
@@ -19,7 +19,7 @@ var l1 = Titanium.UI.createLabel({
 	font:{fontSize:14},
 	top: top,
 	left: left,
-	width: width,
+	width: width
 });
 
 top += label_height;
@@ -127,5 +127,7 @@ button.addEventListener('click', function() {
 	//Titanium.UI.createAlertDialog({'title': 'MediTracker', 'message': dose}).show();
 	//Titanium.UI.createAlertDialog({'title': 'MediTracker', 'message': time_1}).show();
 	Titanium.UI.createAlertDialog({'title': 'MediTracker', 'message': db.lastInsertRowId}).show();
-	db.close();	
+	db.close();
+	var tabGroup =  win.getTabGroup();
+	tabGroup.setActiveTab(0);
 });

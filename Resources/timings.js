@@ -1,8 +1,10 @@
 
+window = Titanium.UI.currentWindow
 // create table view data object
-var data = [];
+window.addEventListener('focus', function(e){
 
-win.addEventListener( "focus", function ( e ) {
+	var data = [];
+
 	var db = Titanium.Database.install('../meditracker.db', 'meditracker');
 	
 	var rows = db.execute('select * from medicine');
