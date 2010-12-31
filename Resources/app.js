@@ -3,7 +3,7 @@ Titanium.UI.setBackgroundColor('#000');
 
 // It is safe to call this method multiple times since
 // this method will only install once if it doesn't already exist on the device.
-var db = Titanium.Database.open('meditracker');
+var db = Titanium.Database.install('../meditracker.db', 'meditracker');
 db.execute('CREATE TABLE IF NOT EXISTS medicine (ID INTEGER PRIMARY KEY, NAME VARCHAR(64))');
 
 // create tab group

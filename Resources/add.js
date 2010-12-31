@@ -1,7 +1,6 @@
 var win = Titanium.UI.currentWindow;
 
 var android = Ti.Platform.name == 'android';
-var db = Titanium.Database.open('meditracker');
 
 var label_height = android ? 20 : 20
 var text_field_height = android ? 45 : 35;
@@ -122,11 +121,11 @@ button.addEventListener('click', function() {
 	var medicine = medicine_name.value;
 	var dose = dosage.value;
 	var time_1 = medicine_time.value;
+	var db = Titanium.Database.install('../meditracker.db', 'meditracker');
 	db.execute('INSERT INTO medicine (name) values (?)', medicine);
 	//Titanium.UI.createAlertDialog({'title': 'MediTracker', 'message': medicine}).show();
 	//Titanium.UI.createAlertDialog({'title': 'MediTracker', 'message': dose}).show();
 	//Titanium.UI.createAlertDialog({'title': 'MediTracker', 'message': time_1}).show();
 	Titanium.UI.createAlertDialog({'title': 'MediTracker', 'message': db.lastInsertRowId}).show();
+	db.close();	
 });
-
-db.close();
