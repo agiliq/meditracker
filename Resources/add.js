@@ -128,4 +128,6 @@ button.addEventListener('click', function() {
 	//Titanium.UI.createAlertDialog({'title': 'MediTracker', 'message': time_1}).show();
 	Titanium.UI.createAlertDialog({'title': 'MediTracker', 'message': db.lastInsertRowId}).show();
 	db.close();
+	var tabGroup =  win.getTabGroup();
+	tabGroup.setActiveTab(0);
 });

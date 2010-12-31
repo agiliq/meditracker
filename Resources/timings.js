@@ -1,5 +1,8 @@
 
+window = Titanium.UI.currentWindow
 // create table view data object
+window.addEventListener('focus', function(e){
+
 var data = [];
 
 var db = Titanium.Database.open('meditracker');
@@ -8,7 +11,7 @@ var rows = db.execute('select * from medicine');
 
 while (rows.isValidRow())
 {
-	data.push({pk: rows.field(0), title: rows.fieldByName('name'), hasChild: false, test:'medicine.js'});
+	data.push({pk: rows.field(0), title: rows.fieldByName('name'), hasChild: true, test:'medicine.js'});
 	rows.next();
 }
 rows.close();
@@ -38,3 +41,5 @@ tableview.addEventListener('click', function(e) {
 Titanium.UI.currentWindow.add(tableview);
 
 db.close();
+
+});
