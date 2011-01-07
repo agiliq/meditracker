@@ -12,7 +12,7 @@ window.addEventListener('focus', function(e){
 	Titanium.UI.createAlertDialog({'title': 'MediTracker', 'message': 'Hello'}).show();
 	while (rows.isValidRow())
 	{
-		data.push({pk: rows.field(0), title: rows.fieldByName('name'), hasChild: false, test:'medicine.js'}),
+		data.push({pk: rows.field(0), title: rows.fieldByName('name'), hasChild: true, test:'medicine.js'}),
 		rows.next();
 	}
 	rows.close();
