@@ -48,23 +48,41 @@
     <div class="clear"></div>
   </div>
   <div class="content">
-    <!--MEDICINES LIST STARTS-->
+    <!--MEDICINES FORM STARTS-->
     <div class="add_medicine">
+      <form id='add_form'>
       <label>Medicine Name :</label>
-      <input name="textfield" type="text" class="textfield" id="textfield" />
+      <input name="med_name" type="text" class="textfield" id="textfield" />
       <br/>
       <label>Dosage :</label>
-      <input name="textfield" type="text" class="textfield" id="textfield" />
+      <input name="dosage" type="text" class="textfield" id="textfield" />
       <br/>
       <label>Timing :</label>
-      <div>
-        <input name="textfield" type="text" class="textfield_small" id="textfield" />
-        <input name="textfield" type="text" class="textfield_small" id="textfield" />
-        <select name="select" id="select" class="listmenu_small">
-          <option>AM</option>
-          <option>PM</option>
+      
+        <select name="hours" id="select" class="listmenu_small">
+          <option value='0'>00</option>
+          <option value='1'>01</option>
+          <option value='2'>02</option>
+          <option value='3'>03</option>
+          <option value='4'>04</option>
+          <option value='5'>05</option>
+          <option value='6'>06</option>
+          <option value='7'>07</option>
+          <option value='8'>08</option>
+          <option value='9'>09</option>
+          <option value='10'>10</option>
+          <option value='11'>11</option>
+          <option value='12'>12</option>
         </select>
-      </div>
+        <select name="minutes" id="select" class="listmenu_small">
+          <option value='0'>00</option>
+          <option value='30'>30</option>
+        </select>
+        <select name="select" id="select" class="listmenu_small">
+          <option value='am'>AM</option>
+          <option value='pm'>PM</option>
+        </select>
+      
       <input name="button" type="button" class="button" id="button" value="Add Another Timing" />
       <br/>
       <label>Stock with me :</label>
@@ -82,8 +100,10 @@
         <input type="radio" name="RadioGroup1" value="radio" id="RadioGroup1_1" />
         No</label>
       <br />
+      <input type="submit" value="Save" />
+      </form>
     </div>
-    <!--MEDICINES LIST ENDS-->
+    <!--MEDICINES FORM ENDS-->
   </div>
 </div>
 <!--MAIN CONTAINER ENDS-->

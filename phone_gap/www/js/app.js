@@ -17,3 +17,87 @@ $.extend({
     return $.getUrlVars()[name];
   }
 });
+
+/* PHONE-GAP DB API */
+// Populate the database 
+//
+function populateDB(tx) {
+    //tx.executeSql('DROP TABLE IF EXISTS DEMO');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id INTEGER PRIMARY KEY, data)');
+    //tx.executeSql('INSERT INTO DEMO (data) VALUES ("First row")');
+    //tx.executeSql('INSERT INTO DEMO (data) VALUES ("Second row")');
+}
+
+// Query the database
+//
+function queryDB(tx) {
+    tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
+}
+
+// Query the success callback
+//
+function querySuccess(tx, results) {
+    // this will be 0 since it is a select statement
+    console.log("Rows Affected = " + results.rowsAffected);
+    // the number of rows returned by the select statement
+    console.log("Insert ID = " + results.rows.length);
+    var len = results.rows.length;
+    console.log("DEMO table: " + len + " rows found.");
+    for (var i=0; i<len; i++){
+        console.log("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).data);
+        var row_item = results.rows.item(i);
+        $('div.list ul').append('<li><a href=details.html?med_id=' + row_item.id + '>' +  row_item.data +'</a></li>');
+    }
+
+}
+
+// Transaction error callback
+//
+function errorCB(err) {
+    console.log("Error processing SQL: "+err.code);
+    console.log("Error processing SQL: "+err.message);
+    console.log("Error processing SQL: "+err);
+}
+
+// Transaction success callback
+//
+function successCB() {
+    var db = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
+    db.transaction(queryDB, errorCB);
+}
+
+function showDetails(med_id) {
+	console.log(med_id);
+	var db = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
+	var render = function (tx, results) {
+		console.log('in render');
+		console.log('results :' + results);
+		var len = results.rows.length;
+    	console.log("DEMO table: " + len + " rows found.");
+    	for (var i=0; i<len; i++){
+       		console.log("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).data);
+        	var row_item = results.rows.item(i);
+        	$('div.list').append('<p>Medicine Name is :' +  row_item.data +'</p>');
+        };
+	};
+	var select = function (tx) {
+		console.log('in select...');
+		tx.executeSql('SELECT * FROM DEMO WHERE id = "' + med_id + '"', [], render, errorCB);
+	};
+	db.transaction(select);
+	console.log('done');
+};
+
+$(function(){
+	$('form#add_form').submit(function () {
+		var med_name = $(this).children('input[name="med_name"]').val();
+		console.log(med_name);
+		var db = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
+		var insert = function (tx) {
+			tx.executeSql('INSERT INTO DEMO (data) VALUES ("' + med_name + '")');
+		};
+		db.transaction(insert);
+		console.log('done');
+		return false;
+	});
+});
