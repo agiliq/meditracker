@@ -34,7 +34,7 @@
 	/* When this function is called, PhoneGap has been initialized and is ready to roll */
 	function onDeviceReady()
 	{
-		// do your thing!
+		editMedicine($.getUrlVar('med_id'));
 	}
     
     </script>
@@ -49,28 +49,43 @@
   </div>
   <div class="content">
     <!--MEDICINES LIST STARTS-->
+    Editing <div class='list'></div>
     <div class="add_medicine">
+      <form id='edit_form'>
       <label>Medicine Name :</label>
-      <input name="textfield" type="text" class="textfield" id="textfield" value="Crocin" />
+      <input name="med_name" type="text" class="textfield" id="textfield" value="Crocin" />
       <br/>
       <label>Dosage :</label>
-      <input name="textfield" type="text" class="textfield" id="textfield" value="2" />
+      <input name="dosage" type="text" class="textfield" id="textfield" value="2" />
       <br/>
       <label>Timing :</label>
-      <div>
-        <input name="textfield" type="text" class="textfield_small" id="textfield" value="05" />
-        <input name="textfield" type="text" class="textfield_small" id="textfield" value="30" />
-        <select name="select" id="select" class="listmenu_small">
+        <select name="hours" id="select" class="listmenu_small">
+          <option value='0'>00</option>
+          <option value='1'>01</option>
+          <option value='2'>02</option>
+          <option value='3'>03</option>
+          <option value='4'>04</option>
+          <option value='5'>05</option>
+          <option value='6'>06</option>
+          <option value='7'>07</option>
+          <option value='8'>08</option>
+          <option value='9'>09</option>
+          <option value='10'>10</option>
+          <option value='11'>11</option>
+          <option value='12'>12</option>
+        </select>
+        <select name="minutes" id="select" class="listmenu_small">
+          <option value='0'>00</option>
+          <option value='30'>30</option>
+        </select>
+        <select name="am_pm" id="select" class="listmenu_small">
           <option>AM</option>
           <option>PM</option>
         </select>
-      </div>
       <label>Stock with me :</label>
-      <div>
         <input name="textfield" type="text" class="textfield_small" id="textfield" value="10" />
         at
         <input name="textfield" type="text" class="textfield_small" id="textfield" value="home" />
-      </div>
       <br/>
       <label>Remind me to take medicines :</label>
       <label>
@@ -80,6 +95,8 @@
         <input type="radio" name="RadioGroup1" value="radio" id="RadioGroup1_1" />
         No</label>
       <br />
+      <input type="submit" value="Save" class="button" />
+      </form>
     </div>
     <!--MEDICINES LIST ENDS-->
   </div>

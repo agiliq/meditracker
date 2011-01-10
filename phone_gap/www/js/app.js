@@ -62,13 +62,14 @@ function errorCB(err) {
 // Transaction success callback
 //
 function successCB() {
-    var db = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
+	// window.openDatabase("db_name", "version", "display name", db size in bytes);
+    var db = window.openDatabase("meditracker", "1.0", "Medi Tracker", 200000);
     db.transaction(queryDB, errorCB);
 }
 
 function showDetails(med_id) {
 	console.log(med_id);
-	var db = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
+	var db = window.openDatabase("meditracker", "1.0", "Medi Tracker", 200000);
 	var render = function (tx, results) {
 		console.log('in render');
 		console.log('results :' + results);
@@ -88,13 +89,41 @@ function showDetails(med_id) {
 	console.log('done');
 };
 
+function editMedicine(med_id) {
+	var db = window.openDatabase("meditracker", "1.0", "Medi Tracker", 200000);
+	var populate_form = function(tx, results) {
+		var row_item = results.rows.item(0);
+		var form = $('form#edit_form');
+		form.children('input[name="med_name"]').val(row_item.data);
+		console.log('Edit ' + row_item.data);
+	};
+	var select = function (tx) {
+		console.log('in select...');
+		tx.executeSql('SELECT * FROM DEMO WHERE id = "' + med_id + '"', [], populate_form, errorCB);
+	};
+	db.transaction(select);
+};
+
 $(function(){
 	$('form#add_form').submit(function () {
 		var med_name = $(this).children('input[name="med_name"]').val();
 		console.log(med_name);
-		var db = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
+		var db = window.openDatabase("meditracker", "1.0", "Medi Tracker", 200000);
 		var insert = function (tx) {
 			tx.executeSql('INSERT INTO DEMO (data) VALUES ("' + med_name + '")');
+		};
+		db.transaction(insert);
+		console.log('done');
+		return false;
+	});
+	
+	$('form#edit_form').submit(function () {
+		var med_id = $.getUrlVar('med_id');
+		var med_name = $(this).children('input[name="med_name"]').val();
+		console.log(med_name);
+		var db = window.openDatabase("meditracker", "1.0", "Medi Tracker", 200000);
+		var insert = function (tx) {
+			tx.executeSql('UPDATE DEMO SET data="' + med_name + '" WHERE id = "' + med_id + '"');
 		};
 		db.transaction(insert);
 		console.log('done');

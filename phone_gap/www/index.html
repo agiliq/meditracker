@@ -35,7 +35,7 @@
 	/* When this function is called, PhoneGap has been initialized and is ready to roll */
 	function onDeviceReady()
 	{
-		var db = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
+		var db = window.openDatabase("meditracker", "1.0", "Medi Tracker", 200000);
         db.transaction(populateDB, errorCB, successCB);
 	}
     
