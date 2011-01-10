@@ -21,17 +21,16 @@ $.extend({
 /* PHONE-GAP DB API */
 // Populate the database 
 //
-function populateDB(tx) {
-    //tx.executeSql('DROP TABLE IF EXISTS DEMO');
-    tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id INTEGER PRIMARY KEY, data)');
-    //tx.executeSql('INSERT INTO DEMO (data) VALUES ("First row")');
-    //tx.executeSql('INSERT INTO DEMO (data) VALUES ("Second row")');
+function createDB(tx) {
+    tx.executeSql('CREATE TABLE IF NOT EXISTS medicine (id INTEGER PRIMARY KEY, name VARCHAR, dosage VARCHAR, remind BOOLEAN)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS medicine_timing (medicine INTEGER, medicine_time TIME, am_pm VARCHAR, FOREIGN KEY (medicine) REFERENCES medicine(id))');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS medicine_stock (medicine INTEGER, place VARCHAR, quantity INTEGER, FOREIGN KEY (medicine) REFERENCES medicine(id))');
 }
 
 // Query the database
 //
-function queryDB(tx) {
-    tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
+function showList(tx) {
+    tx.executeSql('SELECT * FROM medicine', [], querySuccess, errorCB);
 }
 
 // Query the success callback
@@ -40,13 +39,12 @@ function querySuccess(tx, results) {
     // this will be 0 since it is a select statement
     console.log("Rows Affected = " + results.rowsAffected);
     // the number of rows returned by the select statement
-    console.log("Insert ID = " + results.rows.length);
     var len = results.rows.length;
-    console.log("DEMO table: " + len + " rows found.");
+    console.log("medicine table: " + len + " rows found.");
     for (var i=0; i<len; i++){
-        console.log("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).data);
+        console.log("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).name);
         var row_item = results.rows.item(i);
-        $('div.list ul').append('<li><a href=details.html?med_id=' + row_item.id + '>' +  row_item.data +'</a></li>');
+        $('div.list ul').append('<li><a href=details.html?med_id=' + row_item.id + '>' +  row_item.name +'</a></li>');
     }
 
 }
@@ -74,16 +72,16 @@ function showDetails(med_id) {
 		console.log('in render');
 		console.log('results :' + results);
 		var len = results.rows.length;
-    	console.log("DEMO table: " + len + " rows found.");
+    	console.log("medicine table: " + len + " rows found.");
     	for (var i=0; i<len; i++){
-       		console.log("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).data);
+       		console.log("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).name);
         	var row_item = results.rows.item(i);
-        	$('div.list').append('<p>Medicine Name is :' +  row_item.data +'</p>');
+        	$('div.list').append('<p>Medicine Name is :' +  row_item.name +'</p>');
         };
 	};
 	var select = function (tx) {
 		console.log('in select...');
-		tx.executeSql('SELECT * FROM DEMO WHERE id = "' + med_id + '"', [], render, errorCB);
+		tx.executeSql('SELECT * FROM medicine WHERE id = "' + med_id + '"', [], render, errorCB);
 	};
 	db.transaction(select);
 	console.log('done');
@@ -94,12 +92,18 @@ function editMedicine(med_id) {
 	var populate_form = function(tx, results) {
 		var row_item = results.rows.item(0);
 		var form = $('form#edit_form');
-		form.children('input[name="med_name"]').val(row_item.data);
+		form.children('input[name="med_name"]').val(row_item.name);
+		form.children('input[name="dosage"]').val(row_item.dosage);
+		if (row_item.remind == 1) {
+			$('input[name="remind"][value="yes"]', '#edit_form').attr('checked', true);
+		} else { 
+			$('input[name="remind"][value="no"]', '#edit_form').attr('checked', true);
+		};
 		console.log('Edit ' + row_item.data);
 	};
 	var select = function (tx) {
 		console.log('in select...');
-		tx.executeSql('SELECT * FROM DEMO WHERE id = "' + med_id + '"', [], populate_form, errorCB);
+		tx.executeSql('SELECT * FROM medicine WHERE id = "' + med_id + '"', [], populate_form, errorCB);
 	};
 	db.transaction(select);
 };
@@ -107,12 +111,26 @@ function editMedicine(med_id) {
 $(function(){
 	$('form#add_form').submit(function () {
 		var med_name = $(this).children('input[name="med_name"]').val();
+		var dosage = $(this).children('input[name="dosage"]').val();
+		var hours = $(this).children('input[name="hours"]').val();
+		var minutes = $(this).children('input[name="minutes"]').val();
+		var am_pm = $(this).children('input[name="am_pm"]').val();
+		//if (am_pm == 'pm')
+		//	hours += 12;
+			
+		var time = hours + minutes + ':00';
+		var stock = $(this).children('input[name="stock"]').val();
+		var remind = $('input[name="remind"]:checked', this).val() == 'yes' ? 1 : 0;
 		console.log(med_name);
 		var db = window.openDatabase("meditracker", "1.0", "Medi Tracker", 200000);
 		var insert = function (tx) {
-			tx.executeSql('INSERT INTO DEMO (data) VALUES ("' + med_name + '")');
+			tx.executeSql('INSERT INTO medicine (name, dosage, remind) VALUES ("' + med_name + '", "' + dosage + '", "' + remind + '")');
+			console.log('last inset id ' + db.lastInsertRowId);
+			tx.executeSql('INSERT INTO medicine_timing (medicine, medicine_time, am_pm) VALUES (1, "' + time + '", "' + am_pm + '")');
+			tx.executeSql('INSERT INTO medicine_stock (medicine, place, quantity) VALUES (1, "home", "' + stock + '")');
 		};
-		db.transaction(insert);
+		db.transaction(insert, errorCB);
+		console.log('last last insert id ' + db.lastInsertRowId);
 		console.log('done');
 		return false;
 	});
@@ -120,10 +138,20 @@ $(function(){
 	$('form#edit_form').submit(function () {
 		var med_id = $.getUrlVar('med_id');
 		var med_name = $(this).children('input[name="med_name"]').val();
+		var dosage = $(this).children('input[name="dosage"]').val();
+		var hours = $(this).children('input[name="hours"]').val();
+		var minutes = $(this).children('input[name="minutes"]').val();
+		var am_pm = $(this).children('input[name="am_pm"]').val();
+		if (am_pm == 'pm')
+			hours += 12;
+			
+		var time = hours + minutes + ':00';
+		var stock = $(this).children('input[name="stock"]').val();
+		var remind = $('input[name="remind"]:checked', this).val() == 'yes' ? 1 : 0;
 		console.log(med_name);
 		var db = window.openDatabase("meditracker", "1.0", "Medi Tracker", 200000);
 		var insert = function (tx) {
-			tx.executeSql('UPDATE DEMO SET data="' + med_name + '" WHERE id = "' + med_id + '"');
+			tx.executeSql('UPDATE medicine SET data="' + med_name + '" WHERE id = "' + med_id + '"');
 		};
 		db.transaction(insert);
 		console.log('done');

@@ -36,7 +36,8 @@
 	function onDeviceReady()
 	{
 		var db = window.openDatabase("meditracker", "1.0", "Medi Tracker", 200000);
-        db.transaction(populateDB, errorCB, successCB);
+        db.transaction(createDB, errorCB);
+        db.transaction(showList, errorCB);
 	}
     
     </script>
@@ -54,8 +55,8 @@
       <div class="content">
         <!--MEDICINES LIST STARTS-->
         <div class="list">
-		<h1>Medicien List</h1>
-		  <ul>
+		<h1>Medicine List</h1>
+		<ul>
         	<!--<li><a href='details.html?med_id=1'>Crocin</a></li>
             <li><a href='details.html?med_id=2'>Metacin</a></li>
             <li><a href='details.html?med_id=3'>Paracetamol</a></li>
