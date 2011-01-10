@@ -61,4 +61,9 @@ label{display:block; margin-top:5px;}
 .button{width:50%; background:url(../images/button_bg.png); font:bold 12px Arial, Helvetica, sans-serif; color:#FFF; line-height:25px; border:1px solid #002C5D; margin:3px 0px 0px 0px; cursor:pointer;}
 .button:hover{width:50%; background:url(../images/button_bg_hover.png); font:bold 12px Arial, Helvetica, sans-serif; color:#FFF; line-height:25px; border:1px solid #002C5D; margin:3px 0px 0px 0px; cursor:pointer;}
 
+.greyborder{border-left:1px solid #999;border-top:1px solid #999;}
+.tab_title{font:bold 14px Arial, Helvetica, sans-serif; color:#1461A1; line-height:24px; border-right:1px solid #999;  border-bottom:1px solid #999; text-indent:15px;}
+.tab_contents{font:12px Arial, Helvetica, sans-serif; color:#333; line-height:24px; border-right:1px solid #999;  border-bottom:1px solid #999; text-indent:15px;}
+h1{font:bold 16px Arial, Helvetica, sans-serif; color:#C30; line-height:30px; }
+
 .clear{clear:both;}

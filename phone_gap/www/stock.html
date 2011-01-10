@@ -1,45 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-  <head>
-	<!-- Change this if you want to allow scaling -->
-    <meta name="viewport" content="width=default-width; user-scalable=no" />
-
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Medi Tracker</title>
 <link href="css/medi_styles.css" rel="stylesheet" type="text/css" />
-<!-- iPad/iPhone specific css below, add after your main css >
-	<link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
-	<link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />		
-	-->
-	<script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
-	<script type="text/javascript" charset="utf-8" src="js/jquery-1.4.4.min.js"></script>
-	<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
-    <script type="text/javascript" charset="utf-8">
-
-
-	// If you want to prevent dragging, uncomment this section
-	/*
-	function preventBehavior(e) 
-	{ 
-      e.preventDefault(); 
-    };
-	document.addEventListener("touchmove", preventBehavior, false);
-	*/
-	
-	function onBodyLoad()
-	{
-		document.addEventListener("deviceready",onDeviceReady,false);
-	}
-	
-	/* When this function is called, PhoneGap has been initialized and is ready to roll */
-	function onDeviceReady()
-	{
-		// do your thing!
-	}
-    
-    </script>
 </head>
-<body onload="onBodyLoad()">
+<body>
 <!--MAIN CONTAINER STARTS-->
 <div class="wrapper">
   <div class="header">
@@ -49,7 +15,51 @@
   </div>
   <div class="content">
     <!--MEDICINES LIST STARTS-->
-    <div class="add_medicine">stock
+    <div class="add_medicine"><br/>
+    <h1>Stock available with me :</h1>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="greyborder">
+        <tr>
+          <td class="tab_title">Medicine </td>
+          <td align="center" class="tab_title">Stock</td>
+        </tr>
+        <tr>
+          <td class="tab_contents">Crocin</td>
+          <td align="center" class="tab_contents">3</td>
+        </tr>
+        <tr>
+          <td class="tab_contents">Metacin</td>
+          <td align="center" class="tab_contents">9</td>
+        </tr>
+        <tr>
+          <td class="tab_contents">Anacin</td>
+          <td align="center" class="tab_contents">18</td>
+        </tr>
+        <tr>
+          <td class="tab_contents">Coldact</td>
+          <td align="center" class="tab_contents">1</td>
+        </tr>
+        <tr>
+          <td class="tab_contents">Crocin</td>
+          <td align="center" class="tab_contents">3</td>
+        </tr>
+        <tr>
+          <td class="tab_contents">Crocin</td>
+          <td align="center" class="tab_contents">3</td>
+        </tr>
+        <tr>
+          <td class="tab_contents">Crocin</td>
+          <td align="center" class="tab_contents">3</td>
+        </tr>
+        <tr>
+          <td class="tab_contents">Crocin</td>
+          <td align="center" class="tab_contents">3</td>
+        </tr>
+        <tr>
+          <td class="tab_contents">Crocin</td>
+          <td align="center" class="tab_contents">3</td>
+        </tr>
+      </table>
+      <br/>
     </div>
     <!--MEDICINES LIST ENDS-->
   </div>
@@ -58,10 +68,10 @@
 <!--STICKY FOOTER STARTS-->
 <div class="footer">
   <ul>
-    <li class="time"><a href="index.html"><img src="images/time_icon.png" width="27" height="37" alt="timings" /></a></li>
+    <li class="time"><a href="list.html"><img src="images/time_icon.png" width="27" height="37" alt="timings" /></a></li>
     <li class="time"><a href="add.html"><img src="images/add_icon.png" width="27" height="37" alt="Add Medicine" /></a></li>
     <li class="time"><a href="edit.html"><img src="images/edit_icon.png" width="27" height="37" alt="Edit Medicine Inforamtion" /></a></li>
-    <li class="time active"><a href="stock.html"><img src="images/stock_icon.png" width="27" height="37" alt="Available Stock" /></a></li>
+    <li class="time active"><a href="stock.html"><img src="images/stock_icon.png" width="33" height="37" alt="Available Stock" /></a></li>
   </ul>
 </div>
 <!--STICKY FOOTER ENDS-->
