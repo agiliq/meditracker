@@ -35,13 +35,13 @@
 	/* When this function is called, PhoneGap has been initialized and is ready to roll */
 	function onDeviceReady()
 	{
-		showDetails($.getUrlVar('med_id'));
+		deleteMedicine($.getUrlVar('med_id'));
 	}
     
     </script>
   </head>
+  
   <body onload="onBodyLoad()">
-    <!--MAIN CONTAINER STARTS-->
 	<div class="wrapper">
   	  <div class="header">
     	<div class="logo">
@@ -53,25 +53,8 @@
       <div class="content">
         <!--MEDICINE DETAILS STARTS-->
         <div class="list">
-		<h1>Medicine Details</h1>
-		  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="greyborder" id="med_details">
-		  	<tr>
-		  		<th align="left" class="tab_title">Name</th>
-		  		<td class="tab_contents" id='med_name'></td>
-		  	</tr>
-		  	<tr>
-		  		<th align="left" class="tab_title">Dosage</th>
-		  		<td class="tab_contents" id='med_dosage'></td>
-		  	</tr>
-		  	<tr>
-		  		<th align="left" class="tab_title">Medicine Time</th>
-		  		<td class="tab_contents" id='med_time'></td>
-		  	</tr>
-		  	<tr>
-		  		<th align="left" class="tab_title">Stock</th>
-		  		<td class="tab_contents" id='med_stock'></td>
-		  	</tr>
-		  </table>
+		<h1>Delete Medicine</h1>
+		  Deleting selected medicine....
         </div>
         <!--MEDICINE DETAILS ENDS-->
       </div>
@@ -105,4 +88,4 @@
     </div>
 	<!--STICKY FOOTER ENDS-->
   </body>
-</html>
+</html>	
