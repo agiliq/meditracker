@@ -163,42 +163,40 @@ function editMedicine(med_id) {
 };
 
 
-function get_medicine_stock(med_name_stock, med_item) {
-	var db = window.openDatabase("meditracker", "1.0", "Medi Tracker", 200000);
-	
-	var populate_med_name_stock = function (tx, results) {
-		var stock_item = results.rows.item(0);
-		med_name_stock[med_item.name] = stock_item.quantity;
-	};
-	var get_stock = function (tx, results) {
-		log('render medicine & stock in table');
-		tx.executeSql('SELECT * FROM medicine_stock WHERE medicine = ?', [med_id], populate_med_name_stock, errorCB);
-	};
-	db.transaction(get_stock, errorCB);
-};
-
-function get_medicine_stock (tx, med_list) {
-	var len = med_list.rows.length;
-	log('med items: ' + len);
-	var med_name_stock = {};
-	for (i=0;i<=len;i++){
-		var med_item = med_list.rows.item(i);
-		log(med_item.id);
-		get_medicine_stock(med_name_stock, med_item);
-	}
-	log(med_name_stock);
-	//$('table').append($('<tr>').append($('td').text(med_item.name)).append($('td').text(stock_item.quantity)));
-	console.log('done');
-};
-	
 function showStock(){
 	log('show stock');
 	var db = window.openDatabase("meditracker", "1.0", "Medi Tracker", 200000);
 	
-	var get_medicines = function(tx) {
-		tx.executeSql('SELECT * FROM medicine', [], get_medicine_stock, errorCB);
+	var get_medicine_stock = function (tx, med_list) {
+		var len = med_list.rows.length;
+		log('Total Medicines = ' + len);
+		
+		for (i=0; i<len; i++) {
+			var med_item = med_list.rows.item(i);
+			log('Find stock for: ' + med_item.name + ' and id is ' + med_item.id);
+			
+			var log_med_stock = function (tx, med_stock, med_item) {
+				var stock_item = med_stock.rows.item(0);
+				//log('Med Name: ' + med_item.name + ' Med Stock ' + stock_item.quantity);
+				$('table').append('<tr><td class="tab_contents">' + med_item.name + '</td><td align="center" class="tab_contents">' + stock_item.quantity + '</td></tr>');
+			};
+			
+			var log_med = function(med_item){
+				var x = function(tx, results) {
+					log('med item in context is ' + med_item.name);
+					log_med_stock(tx, results, med_item);
+				};
+				return x;
+			};
+			tx.executeSql('SELECT * FROM medicine_stock WHERE medicine = ?', [med_item.id], log_med(med_item), function(){log('getting stock for ' + med_item.id +' raised error');});
+		};
+		log('done getting stock');
 	};
-	db.transaction(get_medicines, errorCB);
+	
+	var get_medicines = function(tx) {
+		tx.executeSql('SELECT * FROM medicine', [], get_medicine_stock, function(){log('getting medicines raised error');});
+	};
+	db.transaction(get_medicines, function(){log('this transaction raised error');});
 };
 
 $(function(){
