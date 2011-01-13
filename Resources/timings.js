@@ -1,5 +1,5 @@
 
-window = Titanium.UI.currentWindow
+window = Titanium.UI.currentWindow;
 // create table view data object
 window.addEventListener('focus', function(e){
 
@@ -9,10 +9,9 @@ window.addEventListener('focus', function(e){
 	
 	var rows = db.execute('select * from medicine');
 	
-	Titanium.UI.createAlertDialog({'title': 'MediTracker', 'message': 'Hello'}).show();
 	while (rows.isValidRow())
 	{
-		data.push({pk: rows.field(0), title: rows.fieldByName('name'), hasChild: true, test:'medicine.js'}),
+		data.push({pk: rows.field(0), title: rows.fieldByName('name'), hasChild: true, url:'medicine.js'});
 		rows.next();
 	}
 	rows.close();
@@ -25,21 +24,19 @@ window.addEventListener('focus', function(e){
 	
 	// create table view event listener
 	tableview.addEventListener('click', function(e) {
-		if (e.rowData.test) {
+		if (e.rowData.url) {
 			var win = Titanium.UI.createWindow({
-				url:e.rowData.test,
+				url:e.rowData.url,
 				title: e.rowData.title,
-				backgroundColr: '#181818',
+				backgroundColor: '#ffffff',
 				pk: e.rowData.pk
 			});
-			Titanium.UI.currentTab.open(win,{animated:true});
+			Titanium.UI.currentTab.open(win, {animated:true});
 		}
 	});
 	
 	// add table view to the window
-	// win1.add(tableview);
-	
-	Titanium.UI.currentWindow.add(tableview);
+	window.add(tableview);
 	
 	db.close();
 });

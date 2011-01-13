@@ -4,7 +4,9 @@ Titanium.UI.setBackgroundColor('#000');
 // It is safe to call this method multiple times since
 // this method will only install once if it doesn't already exist on the device.
 var db = Titanium.Database.install('../meditracker.db', 'meditracker');
-db.execute('CREATE TABLE IF NOT EXISTS medicine (ID INTEGER PRIMARY KEY, NAME VARCHAR(64))');
+db.execute('CREATE TABLE IF NOT EXISTS medicine (id INTEGER PRIMARY KEY, name VARCHAR, dosage VARCHAR, remind BOOLEAN);');
+db.execute('CREATE TABLE IF NOT EXISTS medicine_timing (medicine INTEGER, medicine_time TIME, am_pm VARCHAR, FOREIGN KEY (medicine) REFERENCES medicine(id));');
+db.execute('CREATE TABLE IF NOT EXISTS medicine_stock (medicine INTEGER, place VARCHAR, quantity INTEGER, FOREIGN KEY (medicine) REFERENCES medicine(id));');
 
 // create tab group
 var tabGroup = Titanium.UI.createTabGroup();
@@ -42,7 +44,7 @@ var label1 = Titanium.UI.createLabel({
 var win2 = Titanium.UI.createWindow({  
 	url: 'add.js',
 	title: 'Add Medicine',
-    backgroundColor:'#181818'
+    backgroundColor:'#ffffff'
 });
 var tab2 = Titanium.UI.createTab({  
     icon:'KS_nav_ui.png',
@@ -62,11 +64,12 @@ var label2 = Titanium.UI.createLabel({
 // win2.add(label2);
 
 var win3 = Titanium.UI.createWindow({
-	// title: '',
-	backgroundColor: '#181818'
+	url: 'stock.js',
+	title: 'Stock',
+	backgroundColor: '#ffffff'
 });
 var tab3 = Titanium.UI.createTab({
-	title: 'Edit',
+	title: 'Stock',
 	window:win3
 });
 
@@ -87,4 +90,4 @@ tabGroup.open({
 	transition:Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
 });
 
-db.close()
+db.close();
