@@ -87,25 +87,74 @@ y_top += text_field_height;
 win.add(time_label);
 win.add(time);
 
+var time_now = new Date();
+var hours = time_now.getHours();
+var minutes = time_now.getMinutes();
+if (hours > 12) { 
+	var ampm = 'PM';
+	hours = hours - 12;
+} else {
+	var ampm = 'AM';
+}
+
 /* FOCUS EVENT LISTNER ON TIME FIELD */
-time.addEventListener('focus',function(e)
-{
-	Titanium.UI.createAlertDialog({'title': 'MediTracker', 'message': 'Display a time picker popup on focus'}).show();
+time.addEventListener('focus', function() {
+	//Titanium.UI.createAlertDialog({'title': 'MediTracker', 'message': 'Display a time picker popup on focus'}).show();
+	var modal_window = 	Titanium.UI.createWindow({
+		backgroundColor: '#cccccc',
+		setTransparency: 50
+	});
+	stock.focus();
+	var picker = Ti.UI.createPicker({
+		type: Ti.UI.PICKER_TYPE_TIME,
+		top: android ? 40 : 10,
+		setTransparency: 50
+	});
+	picker.selectionIndicator = true;
+	var ok_button = Titanium.UI.createButton({
+		title: 'Ok',
+		width: 100,
+		height: 30,
+		top: android ? 170: 240
+		//left: 20,
+	});
+	picker.addEventListener('change', function(e){
+		if (e.value) {
+			var selected_time = new Date(e.value);
+		} else {
+			var selected_time = new Date();
+		}
+		hours = selected_time.getHours();
+		if (hours > 12) {hours = hours - 12;}
+		if (hours == 0) {hours = 12;}
+		minutes = selected_time.getMinutes();
+		ampm = selected_time.getHours() > 11 ? 'PM':'AM';
+		time.value = hours + ':' + minutes + ':00 ' + ampm;
+	});
+	ok_button.addEventListener('click', function(){
+		if (!hours) {
+			picker.fireEvent('change');
+		};
+		modal_window.close();
+		stock.focus();
+	});
+	var cancel_button = Titanium.UI.createButton({
+		title: 'Cancel',
+		width: 100,
+		height: 30,
+		top: android ? 170 : 240,
+		left: 140
+	});
+	cancel_button.addEventListener('click', function(){
+		modal_window.close();
+		dosage.focus();
+	});
+	modal_window.add(picker);
+	modal_window.add(ok_button);
+	//modal_window.add(cancel_button);
+	modal_window.open({modal: true, navBarHidden:true});
 	// time_label.text = e.value;
 });
-
-
-/* TIME PICKER */
-var value = new Date();
-var medicine_time = Ti.UI.createPicker({
-	type:Ti.UI.PICKER_TYPE_TIME,
-	value:value,
-	top: y_top,
-	left: left,
-	height: 'auto'
-});
-// turn on the selection indicator (off by default)
-medicine_time.selectionIndicator = true;
 
 
 /* STOCK LABEL */

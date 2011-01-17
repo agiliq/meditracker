@@ -21,8 +21,8 @@ var win1 = Titanium.UI.createWindow({
     backgroundColor:'#181818'
 });
 var tab1 = Titanium.UI.createTab({  
-    icon:'KS_nav_views.png',
-    title:'Timings',
+    icon:'images/time_icon.png',
+    //title:'Timings',
     window:win1
 });
 
@@ -47,8 +47,8 @@ var win2 = Titanium.UI.createWindow({
     backgroundColor:'#ffffff'
 });
 var tab2 = Titanium.UI.createTab({  
-    icon:'KS_nav_ui.png',
-    title:'Add',
+    icon:'images/add_icon.png',
+    //title:'Add',
     window:win2
 });
 
@@ -69,7 +69,8 @@ var win3 = Titanium.UI.createWindow({
 	backgroundColor: '#ffffff'
 });
 var tab3 = Titanium.UI.createTab({
-	title: 'Stock',
+	icon:'images/stock_icon.png',
+	//title: 'Stock',
 	window:win3
 });
 

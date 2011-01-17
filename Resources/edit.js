@@ -27,6 +27,11 @@ dosage.value = row1.fieldByName('dosage');
 stock.value = row2.fieldByName('quantity');
 time.value = row3.fieldByName('medicine_time') + ' ' + row3.fieldByName('am_pm');
 
+var med_current_time = row3.fieldByName('medicine_time').split(':');
+hours = med_current_time[0];
+minutes = med_current_time[1];
+ampm = row3.fieldByName('am_pm');
+
 row1.close();
 row2.close();
 row3.close();
@@ -41,8 +46,8 @@ button.addEventListener('click', function() {
 	var remind = 0; 
 	// TODO: INCLUDE A TIME PICKER AND TAKE 
 	// TIME AND AM_PM VALUE FROM IT
-	var med_time = '10:10:30';
-	var am_pm = 'am';
+	var med_time = hours + ':' + minutes + ':00';
+	var am_pm = ampm;
 	var med_stock = stock.value;
 	
 	var db = Titanium.Database.open('meditracker');
@@ -56,8 +61,27 @@ button.addEventListener('click', function() {
     db.execute('UPDATE medicine_stock SET place = ?, quantity = ? WHERE medicine = ?', 'home', med_stock, win.pk);
     
 	db.close();
+	
+		var notify_time = new Date();
+	if (am_pm == 'PM') {
+		if (hours < 12) {hours += 12};
+	}
+	if (am_pm == 'AM') {
+		if (hours == 12) {hours = 0};
+	}
+	notify_time.setHours(hours);
+	notify_time.setMinutes(minutes);
+	if (!android) {
+		Ti.App.iOS.scheduleLocalNotification({
+			alertAction: 'Take Medicine',
+			alertBody: 'Time to take medicine, ' + medicine,
+			sound: 'pop.caf',
+			repeat: 'daily',
+			date: notify_time
+		});
+	}
+	
 	var tabGroup =  win.getTabGroup();
-	Titanium.UI.createAlertDialog({'title': 'MT', 'message': tabGroup}).show();
-	tabGroup.setActiveTab(0);
+	tabGroup.setActiveTab(2);
 	//Titanium.UI.createAlertDialog({'title': 'MediTracker', 'message': 'all over'}).show();
 });
