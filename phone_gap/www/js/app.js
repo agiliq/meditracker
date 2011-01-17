@@ -63,6 +63,28 @@ function querySuccess(tx, results) {
 
 }
 
+function showEditList(tx) {
+    tx.executeSql('SELECT * FROM medicine', [], renderEditList, errorCB);
+}
+
+// Query the success callback
+function renderEditList(tx, results) {
+	console.log('results object', results)
+    // the number of rows returned by the select statement
+    var len = results.rows.length;
+    console.log("medicine table: " + len + " rows found.");
+    for (var i=0; i<len; i++){
+        console.log("Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).name + "item " + results.rows.item(i));
+        var row_item = results.rows.item(i);
+        $('div.add_medicine ul').append('<li><a href=edit_medicine.html?med_id=' + row_item.id + '>' +  row_item.name +'</a></li>');
+    }
+    if (len == 0) {
+    	$('div.list').append('<p>There are no medicines in the list, <a href="add.html">add medicines now</a></p>');
+    }
+
+}
+
+
 // Transaction error callback
 function errorCB(err) {
     console.log("Error processing SQL: "+err.code);
@@ -97,7 +119,7 @@ function showDetails(med_id) {
 		var row_item = results.rows.item(0);
 		log('render time details');
 		$('td#med_time', table).text(row_item.medicine_time + ' ' + row_item.am_pm);
-		$('div.list').append("<a href='edit.html?med_id=" + med_id + "'>Edit</a>");
+		$('div.list').append("<a href='edit_medicine.html?med_id=" + med_id + "'>Edit</a>");
 		$('div.list').append(" | <a href='delete.html?med_id=" + med_id + "'>Delete</a>");
 	};
 	var select = function (tx) {
@@ -131,8 +153,8 @@ function editMedicine(med_id) {
 	var populate_form = function(tx, results) {
 		log('populating name');
 		var row_item = results.rows.item(0);
-		form.children('input[name="med_name"]').val(row_item.name);
-		form.children('input[name="dosage"]').val(row_item.dosage);
+		$('input[name="med_name"]', form).val(row_item.name);
+		$('input[name="dosage"]', form).val(row_item.dosage);
 		if (row_item.remind == 1) {
 			$('input[name="remind"][value="yes"]', '#edit_form').attr('checked', true);
 		} else { 
@@ -145,14 +167,14 @@ function editMedicine(med_id) {
 		var med_time = row_item.medicine_time.split(':');
 		var hours = med_time[0];
 		var minutes = med_time[1];
-		form.children('select[name="hours"]').val(hours);
-		form.children('select[name="minutes"]').val(minutes);
-		form.children('select[name="am_pm"]').val(am_pm);
+		$('select[name="hours"]', form).val(hours);
+		$('select[name="minutes"]', form).val(minutes);
+		$('select[name="am_pm"]', form).val(am_pm);
 	};
 	var populate_stock = function(tx, results) {
 		log('populating stock');
 		var row_item = results.rows.item(0);
-		form.children('input[name="stock"]').val(row_item.quantity);
+		$('input[name="stock"]', form).val(row_item.quantity);
 	};
 	var select = function (tx) {
 		tx.executeSql('SELECT * FROM medicine WHERE id = ?', [med_id], populate_form, errorCB);
@@ -201,15 +223,15 @@ function showStock(){
 
 $(function(){
 	$('form#add_form').submit(function () {
-		var med_name = $(this).children('input[name="med_name"]').val();
-		var dosage = $(this).children('input[name="dosage"]').val();
-		var hours = $(this).children('select[name="hours"]').val();
-		var minutes = $(this).children('select[name="minutes"]').val();
-		var am_pm = $(this).children('select[name="am_pm"]').val();
+		var med_name = $('input[name="med_name"]', this).val();
+		var dosage = $('input[name="dosage"]', this).val();
+		var hours = $('select[name="hours"]', this).val();
+		var minutes = $('select[name="minutes"]', this).val();
+		var am_pm = $('select[name="am_pm"]', this).val();
 		//if (am_pm == 'pm')
 		//	hours += 12;	
 		var med_time = hours + ':' + minutes + ':00';
-		var stock = $(this).children('input[name="stock"]').val();
+		var stock = $('input[name="stock"]', this).val();
 		var remind = $('input[name="remind"]:checked', this).val() == 'yes' ? 1 : 0;
 		
 		var db = window.openDatabase("meditracker", "1.0", "Medi Tracker", 200000);
@@ -228,17 +250,17 @@ $(function(){
 	
 	$('form#edit_form').submit(function () {
 		var med_id = $.getUrlVar('med_id');
-		var med_name = $(this).children('input[name="med_name"]').val();
-		var dosage = $(this).children('input[name="dosage"]').val();
-		var hours = $(this).children('select[name="hours"]').val();
-		var minutes = $(this).children('select[name="minutes"]').val();
-		var am_pm = $(this).children('select[name="am_pm"]').val();
+		var med_name = $('input[name="med_name"]', this).val();
+		var dosage = $('input[name="dosage"]', this).val();
+		var hours = $('select[name="hours"]', this).val();
+		var minutes = $('select[name="minutes"]', this).val();
+		var am_pm = $('select[name="am_pm"]', this).val();
 		//if (am_pm == 'pm')
 		//	hours += 12;
 		
 		var med_time = hours + ':' + minutes + ':00';
 		console.log('H: ' + hours + ', M: ' + minutes + ', time: ' + med_time);
-		var stock = $(this).children('input[name="stock"]').val();
+		var stock = $('input[name="stock"]', this).val();
 		var remind = $('input[name="remind"]:checked', this).val() == 'yes' ? 1 : 0;
 		var db = window.openDatabase("meditracker", "1.0", "Medi Tracker", 200000);
 		var update = function (tx) {

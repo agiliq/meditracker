@@ -34,7 +34,8 @@
 	/* When this function is called, PhoneGap has been initialized and is ready to roll */
 	function onDeviceReady()
 	{
-		editMedicine($.getUrlVar('med_id'));
+		var db = window.openDatabase("meditracker", "1.0", "Medi Tracker", 200000);
+        db.transaction(showEditList, errorCB);
 	}
     
     </script>
@@ -51,54 +52,18 @@
     <!--MEDICINES LIST STARTS-->
     <div class='list'></div>
     <div class="add_medicine">
-	  <h1>Edit Medicine</h1>
-      <form id='edit_form'>
-      <label>Medicine Name :</label>
-      <input name="med_name" type="text" class="textfield" id="textfield" value="Crocin" />
-      <br/>
-      <label>Dosage :</label>
-      <input name="dosage" type="text" class="textfield" id="textfield" value="2" />
-      <br/>
-      <label>Timing :</label>
-        <select name="hours" id="select" class="listmenu_small">
-          <option value='0'>00</option>
-          <option value='1'>01</option>
-          <option value='2'>02</option>
-          <option value='3'>03</option>
-          <option value='4'>04</option>
-          <option value='5'>05</option>
-          <option value='6'>06</option>
-          <option value='7'>07</option>
-          <option value='8'>08</option>
-          <option value='9'>09</option>
-          <option value='10'>10</option>
-          <option value='11'>11</option>
-          <option value='12'>12</option>
-        </select>
-        <select name="minutes" id="select" class="listmenu_small">
-          <option value='0'>00</option>
-          <option value='30'>30</option>
-        </select>
-        <select name="am_pm" id="select" class="listmenu_small">
-          <option>AM</option>
-          <option>PM</option>
-        </select>
-      <label>Stock with me :</label>
-        <input name="stock" type="text" class="textfield_small" id="textfield"/>
-        <!--at
-        <input name="textfield" type="text" class="textfield_small" id="textfield" value="home" />-->
-      <br/>
-      <label>Remind me to take medicines :</label>
-      <label>
-        <input name="remind" type="radio" id="RadioGroup1_0" value="yes" checked="checked" />
-        Yes</label>
-      <label>
-        <input type="radio" name="remind" value="no" id="RadioGroup1_1" />
-        No</label>
-      <br />
-      <input type="submit" value="Save" class="button" />
-      </form>
-    </div>
+	  <h1>Select Medicine to Edit</h1>
+      		<ul>
+        	<!--<li><a href='edit_medicine.html'>Crocin</a></li>
+            <li><a href='edit_medicine.html'>Metacin</a></li>
+            <li><a href='edit_medicine.html'>Paracetamol</a></li>
+            <li><a href='edit_medicine.html'>Coldact</a></li>
+            <li><a href='edit_medicine.html'>Monopharma</a></li>
+            <li><a href='edit_medicine.html'>B-Complex</a></li>
+            <li><a href='edit_medicine.html'>Y-Complex</a></li>-->
+          </ul>
+
+          </div>
     <!--MEDICINES LIST ENDS-->
   </div>
 </div>

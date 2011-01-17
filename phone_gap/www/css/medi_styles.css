@@ -1,5 +1,8 @@
 @charset "utf-8";
 /* CSS Document */
+/* ------------------------------- */
+/* -------  RESET ------ */
+/* ------------------------------- */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -16,7 +19,6 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	outline: 0;
-	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
 }
@@ -36,15 +38,53 @@ ol, ul {
 html, body {height: 100%;}
 img{border:0px;}
 
-.wrapper {min-height: 100%;	height: auto !important;height: 100%;margin: 0 auto -54px; /* the bottom margin is the negative value of the footer's height */}
+
+
+/* ------------------------------- */
+/* -------  MAIN CONTAINERS ------ */
+/* ------------------------------- */
+.wrapper {min-height: 100%;	height: auto !important;height: 100%;margin: 0 auto -74px; /* the bottom margin is the negative value of the footer's height */}
 .footer {height: 54px; /* .push must be the same height as .footer */background:url(../images/footer_bg.png) repeat-x; position: relative;}
 .header{width:100%; background:url(../images/header_bg.jpg) repeat-x; display:block; min-height:35px;  }
 .header .logo{padding:25px 0px 0px 20px;min-height:35px; float:left;}
 .header .list_icon{padding:25px 20px 0px 0px;min-height:35px; float:right;}
 .content{width:100%; background:#FFF; display:block; margin:0px auto;}
+
+
+
+/* ------------------------------- */
+/* -------  HEADINGS ------ */
+/* ------------------------------- */
+h1{font:bold 16px Arial, Helvetica, sans-serif; color:#C30; line-height:30px;}
+h2{font:bold 14px Arial, Helvetica, sans-serif; color:#C30; line-height:30px;}
+h3{font:bold 12px Arial, Helvetica, sans-serif; color:#C30; line-height:30px;}
+h4{font:bold 12px Arial, Helvetica, sans-serif; color:#C30; line-height:30px;}
+h5{font:bold 12px Arial, Helvetica, sans-serif; color:#C30; line-height:30px;}
+h6{font:bold 12px Arial, Helvetica, sans-serif; color:#C30; line-height:30px;}
+
+
+/* ------------------------------- */
+/* -------  INNER PAGES ------ */
+/* ------------------------------- */
+h1{font:bold 16px Arial, Helvetica, sans-serif; color:#C30; line-height:30px;}
+h2{font:bold 14px Arial, Helvetica, sans-serif; color:#C30; line-height:30px;}
+h3{font:bold 12px Arial, Helvetica, sans-serif; color:#C30; line-height:30px;}
+h4{font:bold 12px Arial, Helvetica, sans-serif; color:#C30; line-height:30px;}
+h5{font:bold 12px Arial, Helvetica, sans-serif; color:#C30; line-height:30px;}
+h6{font:bold 12px Arial, Helvetica, sans-serif; color:#C30; line-height:30px;}
+
 .content .list{width:100%;}
-.content .list ul{padding:0px 10px 0px 10px; }
-.content .list ul li{font:12px Arial, Helvetica, sans-serif; color:#666; line-height:30px;  list-style-type:none; border-bottom:1px solid #B8B8B8; padding-left:10px;}
+.content .list ul{padding:0px 10px 0px 0px;border-top:1px solid #B8B8B8;  }
+.content .list ul li{font:12px Arial, Helvetica, sans-serif; color:#666; line-height:30px;  list-style-type:none; border-bottom:1px solid #B8B8B8; }
+.content .list ul li a{ display:block; font:12px Arial, Helvetica, sans-serif; color:#666; line-height:30px; text-decoration:none; background:url(../images/right_arrow.png) right no-repeat;}
+.content .list ul li a:hover{font:12px Arial, Helvetica, sans-serif; color:#000; line-height:30px; text-decoration:none;   }
+
+.add_medicine{width:100%;}
+.add_medicine ul{padding:0px 10px 0px 0px;border-top:1px solid #B8B8B8;  }
+.add_medicine ul li{font:12px Arial, Helvetica, sans-serif; color:#666; line-height:30px;  list-style-type:none; border-bottom:1px solid #B8B8B8; }
+.add_medicine ul li a{ display:block; font:12px Arial, Helvetica, sans-serif; color:#666; line-height:30px; text-decoration:none; background:url(../images/right_arrow.png) right no-repeat;}
+
+.add_medicine ul li a:hover{font:12px Arial, Helvetica, sans-serif; color:#000; line-height:30px; text-decoration:none;   }
 
 .footer ul { padding:0px; margin:0px auto; }
 .footer ul li{width:25%; height:54px; display:inline; list-style-type:none;}
@@ -53,17 +93,26 @@ img{border:0px;}
 .active{ height:44px; background:url(../images/icons_hover.png);padding-top:10px;}
 
 .content .add_medicine{width:90%; font:12px Arial, Helvetica, sans-serif; color:#666; margin:0px auto;  }
-label{display:block; margin-top:5px;}
-.textfield{width:98%; border:1px solid #999; padding:5px;}
+.content .list{width:90%; font:12px Arial, Helvetica, sans-serif; color:#666; margin:0px auto;  }
+
+
+/* ------------------------------- */
+/* -------  FORM STYLES ------ */
+/* ------------------------------- */
+label{ margin-top:5px; float:left; width:100px;}
+.textfield{width:58%; border:1px solid #999; padding:5px; float:left; }
 .textfield_medium{width:50%; border:1px solid #999; padding:5px;}
 .textfield_small{width:30%; border:1px solid #999; padding:5px;}
-.listmenu_small{width:20%; border:1px solid #999; padding:4px;}
-.button{width:50%; background:url(../images/button_bg.png); font:bold 12px Arial, Helvetica, sans-serif; color:#FFF; line-height:25px; border:1px solid #002C5D; margin:3px 0px 0px 0px; cursor:pointer;}
-.button:hover{width:50%; background:url(../images/button_bg_hover.png); font:bold 12px Arial, Helvetica, sans-serif; color:#FFF; line-height:25px; border:1px solid #002C5D; margin:3px 0px 0px 0px; cursor:pointer;}
+.listmenu_small{width:20%; border:1px solid #999; padding:2px; }
+.button{width:62%; background:url(../images/button_bg.png); font:bold 12px Arial, Helvetica, sans-serif; color:#FFF; line-height:25px; border:1px solid #002C5D; margin:3px 0px 0px 0px; cursor:pointer; margin-top:5px;}
+.button:hover{width:62%; background:url(../images/button_bg_hover.png); font:bold 12px Arial, Helvetica, sans-serif; color:#FFF; line-height:25px; border:1px solid #002C5D; margin:3px 0px 0px 0px; cursor:pointer; margin-top:5px;}
 
+
+/* ------------------------------- */
+/* -------  MISCELLANEOUS ------ */
+/* ------------------------------- */
 .greyborder{border-left:1px solid #999;border-top:1px solid #999;}
 .tab_title{font:bold 14px Arial, Helvetica, sans-serif; color:#1461A1; line-height:24px; border-right:1px solid #999;  border-bottom:1px solid #999; text-indent:15px;}
 .tab_contents{font:12px Arial, Helvetica, sans-serif; color:#333; line-height:24px; border-right:1px solid #999;  border-bottom:1px solid #999; text-indent:15px;}
-h1{font:bold 16px Arial, Helvetica, sans-serif; color:#C30; line-height:30px; }
-
+.form_fields{display:block; clear:both; height:34px;}
 .clear{clear:both;}
