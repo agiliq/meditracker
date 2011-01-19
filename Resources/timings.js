@@ -5,7 +5,7 @@ window.addEventListener('focus', function(e){
 
 	var data = [];
 
-	var db = Titanium.Database.install('../meditracker.db', 'meditracker');
+	var db = Titanium.Database.open('meditracker');
 	
 	var rows = db.execute('select * from medicine');
 	

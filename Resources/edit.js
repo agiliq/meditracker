@@ -25,12 +25,13 @@ medicine_name.value = row1.fieldByName('name');
 dosage.value = row1.fieldByName('dosage');
 // remind.value = row1.fieldByName('remind'); // == 1) ? 'Yes' : 'No'],
 stock.value = row2.fieldByName('quantity');
-time.value = row3.fieldByName('medicine_time') + ' ' + row3.fieldByName('am_pm');
 
 var med_current_time = row3.fieldByName('medicine_time').split(':');
-hours = med_current_time[0];
-minutes = med_current_time[1];
+hours = pad(med_current_time[0], 2);
+minutes = pad(med_current_time[1], 2);
 ampm = row3.fieldByName('am_pm');
+
+time.value = hours + ':' + minutes + ':00 ' + row3.fieldByName('am_pm');
 
 row1.close();
 row2.close();
@@ -43,7 +44,7 @@ button.addEventListener('click', function() {
 	var med_dosage = dosage.value;
 	// TODO: INCLUDE A REMIND FIELD IN THE WINDOW
 	// AND TAKE THE VALUE FROM THE FIELD
-	var remind = 0; 
+	var remind = 1; 
 	// TODO: INCLUDE A TIME PICKER AND TAKE 
 	// TIME AND AM_PM VALUE FROM IT
 	var med_time = hours + ':' + minutes + ':00';
@@ -62,7 +63,7 @@ button.addEventListener('click', function() {
     
 	db.close();
 	
-		var notify_time = new Date();
+	var notify_time = new Date();
 	if (am_pm == 'PM') {
 		if (hours < 12) {hours += 12};
 	}
@@ -81,7 +82,33 @@ button.addEventListener('click', function() {
 		});
 	}
 	
-	var tabGroup =  win.getTabGroup();
-	tabGroup.setActiveTab(2);
+	if (android) {
+		// The actions supposedly map 1:1 with the native constants
+		var intent = Ti.Android.createIntent({
+			action: Ti.Android.ACTION_DIAL,
+			data: "tel:55505050"
+		});
+		
+		// This is fairly static: Not much need to be altered here
+		var pending = Ti.Android.createPendingIntent({
+			activity: Ti.Android.currentActivity,
+			intent: intent,
+			type: Ti.Android.PENDING_INTENT_FOR_ACTIVITY,
+			flags: 1073741824
+		});
+
+		var notification = Ti.Android.NotificationManager.createNotification({  
+			contentIntent: pending,  
+		    contentTitle: 'Take medicine',  
+	    	contentText: 'Time to take medicine, ' + medicine, 
+		    tickerText: "Tick tock!",  
+		    when: notify_time.getTime()
+		});  
+		Ti.Android.NotificationManager.notify(1, notification);  
+	}
+	
+	//var tabGroup =  win.getTabGroup();
+	//tabGroup.setActiveTab(2);
+	win.close();
 	//Titanium.UI.createAlertDialog({'title': 'MediTracker', 'message': 'all over'}).show();
 });

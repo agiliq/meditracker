@@ -3,7 +3,7 @@ Titanium.UI.setBackgroundColor('#000');
 
 // It is safe to call this method multiple times since
 // this method will only install once if it doesn't already exist on the device.
-var db = Titanium.Database.install('../meditracker.db', 'meditracker');
+var db = Titanium.Database.open('meditracker');
 db.execute('CREATE TABLE IF NOT EXISTS medicine (id INTEGER PRIMARY KEY, name VARCHAR, dosage VARCHAR, remind BOOLEAN);');
 db.execute('CREATE TABLE IF NOT EXISTS medicine_timing (medicine INTEGER, medicine_time TIME, am_pm VARCHAR, FOREIGN KEY (medicine) REFERENCES medicine(id));');
 db.execute('CREATE TABLE IF NOT EXISTS medicine_stock (medicine INTEGER, place VARCHAR, quantity INTEGER, FOREIGN KEY (medicine) REFERENCES medicine(id));');
@@ -20,9 +20,10 @@ var win1 = Titanium.UI.createWindow({
 	title: 'Medicine Timings',
     backgroundColor:'#181818'
 });
+
 var tab1 = Titanium.UI.createTab({  
     icon:'images/time_icon.png',
-    //title:'Timings',
+    title:'Timings',
     window:win1
 });
 
@@ -48,7 +49,7 @@ var win2 = Titanium.UI.createWindow({
 });
 var tab2 = Titanium.UI.createTab({  
     icon:'images/add_icon.png',
-    //title:'Add',
+    title:'Add',
     window:win2
 });
 
@@ -70,7 +71,7 @@ var win3 = Titanium.UI.createWindow({
 });
 var tab3 = Titanium.UI.createTab({
 	icon:'images/stock_icon.png',
-	//title: 'Stock',
+	title: 'Stock',
 	window:win3
 });
 

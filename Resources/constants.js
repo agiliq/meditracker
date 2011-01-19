@@ -27,3 +27,10 @@ var width = 250;
 // DEFAULT TOP MARGIN TO BE APPLIED IN EACH PAGE
 var top_margin = 10;
 
+function pad(number, length) {
+    var str = '' + number;
+    while (str.length < length) {
+        str = '0' + str;
+    }
+    return str;
+}

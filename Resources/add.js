@@ -26,7 +26,7 @@ button.addEventListener('click', function() {
 	var med_dosage = dosage.value;
 	// TODO: INCLUDE A REMIND FIELD IN THE WINDOW
 	// AND TAKE THE VALUE FROM THE FIELD
-	var remind = 0; 
+	var remind = 1; 
 	// TODO: INCLUDE A TIME PICKER AND TAKE 
 	// TIME AND AM_PM VALUE FROM IT
 	var med_time = hours + ':' + minutes + ':00';

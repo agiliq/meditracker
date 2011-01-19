@@ -127,7 +127,7 @@ time.addEventListener('focus', function() {
 		hours = selected_time.getHours();
 		if (hours > 12) {hours = hours - 12;}
 		if (hours == 0) {hours = 12;}
-		minutes = selected_time.getMinutes();
+		minutes = pad(selected_time.getMinutes(), 2);
 		ampm = selected_time.getHours() > 11 ? 'PM':'AM';
 		time.value = hours + ':' + minutes + ':00 ' + ampm;
 	});
@@ -177,8 +177,8 @@ var stock = Titanium.UI.createTextField({
 	left: left,
 	width: width,
 	// value: 'foo bar',
-	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED
-	//keyboardType: Titanium.UI.KEYBOARD_NUMBER_PAD
+	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
+	keyboardType: Titanium.UI.KEYBOARD_NUMBER_PAD
 });
 y_top += text_field_height;
 
