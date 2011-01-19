@@ -57,7 +57,7 @@ button.addEventListener('click', function() {
 	if (!android) {
 		Titanium.App.iOS.scheduleLocalNotification({
 			alertAction: 'Take Medicine',
-			alertBody: 'Time to take medicine, ' + medicine,
+			alertBody: 'Time to take the medicine ' + medicine,
 			sound: 'pop.caf',
 			repeat: 'daily',
 			date: notify_time

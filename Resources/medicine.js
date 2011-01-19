@@ -106,6 +106,7 @@ win.addEventListener('focus', function(e){
 				db.execute('DELETE FROM medicine WHERE id = ?', win.pk);
 				db.execute('DELETE FROM medicine_stock WHERE medicine = ?', win.pk);
 				db.execute('DELETE FROM medicine_timing WHERE medicine = ?', win.pk);
+				// TODO: REMOVE THE LOCAL NOTIFICATIONS OF THE MEDICINE
 				db.close();
 				win.close();
 			}
