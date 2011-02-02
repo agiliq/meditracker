@@ -1,18 +1,19 @@
-Welcome to your Appcelerator Titanium Mobile Project
+The best way to never miss your medicines.
 
-This is a blank project.  Start by editing your application's app.js to 
-make your first mobile project using Titanium.
+1. Track you medicines with ease.
+2. set when you want them.
+3. Know when you are running out of them
+4. Totally Free!
 
 
+## Features:
+    1. List al your medicines with the stock for them.
+    2. Get a notification when you need to take the medicine.
+    3. Edit your medicine when dosage/timings change.
 
-----------------------------------
-Stuff our legal folk make us say:
 
-Appcelerator, Appcelerator Titanium and associated marks and logos are 
-trademarks of Appcelerator, Inc. 
+## App Store 
+    http://itunes.apple.com/in/app/track-my-med/id415622449?mt=8
 
-Titanium is Copyright (c) 2009-2010 by Appcelerator, Inc. All Rights Reserved.
-
-Titanium is licensed under the Apache Public License (Version 2). Please
-see the LICENSE file for the full license.
-
+## Android Market 
+    http://www.appbrain.com/app/track-your-medicines/com.agiliq.trackmymed
